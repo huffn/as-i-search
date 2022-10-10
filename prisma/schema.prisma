@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:scriptures.db"
+}
+
+model books {
+  id               Int        @id @default(autoincrement())
+  volume_id        Int?
+  book_title       String?
+  book_long_title  String?
+  book_subtitle    String?
+  book_short_title String?
+  book_lds_url     String?
+  volumes          volumes?   @relation(fields: [volume_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  chapters         chapters[]
+}
+
+model chapters {
+  id             Int      @id @default(autoincrement())
+  book_id        Int?
+  chapter_number Int?
+  books          books?   @relation(fields: [book_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  verses         verses[]
+}
+
+model verses {
+  id             Int       @id @default(autoincrement())
+  chapter_id     Int?
+  verse_number   Int?
+  scripture_text String?
+  chapters       chapters? @relation(fields: [chapter_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model volumes {
+  id                 Int     @id @default(autoincrement())
+  volume_title       String?
+  volume_long_title  String?
+  volume_subtitle    String?
+  volume_short_title String?
+  volume_lds_url     String?
+  books              books[]
+}

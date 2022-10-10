@@ -1,0 +1,30 @@
+ul {
+  columns: 4;
+}
+
+@media (max-width: 850px) {
+  ul {
+    columns: 3;
+  }
+}
+
+@media (max-width: 650px) {
+  ul {
+    columns: 2;
+  }
+}
+
+@media (max-width: 550px) {
+  ul {
+    columns: 1;
+  }
+  #mobile-toggle:checked + .mobile-wrapper ul {
+   columns: 2;
+  }
+}
+
+@media (max-width: 350px) {
+  #mobile-toggle:checked + .mobile-wrapper ul {
+   columns: 1;
+  }
+}
