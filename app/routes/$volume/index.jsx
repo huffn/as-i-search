@@ -10,7 +10,7 @@ export default function VolumeIndex() {
         {books.map((book) => (
           <li key={book.book_lds_url}>
             <Link to={book.book_lds_url}>
-            {book.book_long_title}{book.book_subtitle ? ` ${book.book_subtitle}`:''}
+              {book.book_long_title}{book.book_subtitle ? ` ${book.book_subtitle}`:''}
             </Link>
           </li>
         ))}
