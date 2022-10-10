@@ -2,6 +2,7 @@ import { json } from "@remix-run/node";
 import { Link, useCatch, useLoaderData, useParams } from "@remix-run/react";
 import  prisma from '~/lib/db.server'
 import chapterCss from '~/css/chapter.css'
+import userNotes from "~/lib/userNotes";
 
 export const loader = async ({ params }) => {
   const book = await prisma.books.findFirst({
@@ -40,9 +41,14 @@ export default function Chapter() {
 
   return (
     <>
-      <h3>{book === 'dc' ? 'Section' : 'Chapter'} {chapter.chapter_number} <Link to="./notes">♫</Link></h3>
+      <h3>{book === 'dc' ? 'Section' : 'Chapter'} {chapter.chapter_number}</h3>
       {chapter.verses.map((verse) => (
-        <p key={verse.id}>{verse.verse_number}: {verse.scripture_text}</p>
+        <>
+          <p key={verse.id}>{verse.verse_number}: {verse.scripture_text} <Link to={`./${verse.verse_number}`}>+♪</Link></p>
+          {userNotes.get(verse.id)?.map((note, index) => (
+            <span key={`${verse.id}_${index}`} className="generalConference">{note}</span>
+          ))}
+        </>
       ))}
     </>
   )
